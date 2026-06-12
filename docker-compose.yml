@@ -12,9 +12,9 @@ services:
     volumes:
       - minio_data:/data
 
-    ports:
-      - "9000:9000"
-      - "9001:9001"
+    expose:
+      - "9000"
+      - "9001"
 
 volumes:
   minio_data:
