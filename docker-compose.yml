@@ -1,0 +1,26 @@
+services:
+  minio:
+    image: quay.io/minio/minio:RELEASE.2025-09-06T17-38-46Z
+    command: server /data --console-address ":9001"
+
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+      MINIO_SERVER_URL: https://s3.colibri-bf.com
+      MINIO_BROWSER_REDIRECT_URL: https://minio.colibri-bf.com
+
+    volumes:
+      - minio_data:/data
+
+    expose:
+      - "9000"
+      - "9001"
+
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  minio_data:
